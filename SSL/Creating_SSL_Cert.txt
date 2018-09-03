@@ -1,0 +1,36 @@
+1. Create the config file so you don't have to go through the prompts
+
+    add to file san.cfg:
+        [req]
+        distinguished_name = req_distinguished_name
+        x509_extensions = v3_req
+        prompt = no
+        [req_distinguished_name]
+        C = US
+        ST = CA
+        L = SanDiego
+        O = OTR_Enterprises
+        OU = .
+        CN = OTR_Enterprises
+        [v3_req]
+        keyUsage = critical, digitalSignature, keyAgreement
+        extendedKeyUsage = serverAuth
+        subjectAltName = @alt_names
+        [alt_names]
+        DNS.1 = localhost
+        DNS.2 = localhost:443
+        DNS.3 = https://localhost
+
+2. Create the key and the cert via openssl
+
+openssl req -x509 -newkey rsa:4096 -sha256 -keyout localhost.key -out localhost.crt -days 600 -config san.cnf
+
+3. Combine the 2 files so windows can read them
+
+openssl pkcs12 -export -name “OTR_Enterprises” -out localhost.pfx -inkey localhost.key -in localhost.crt
+
+4. Import it to windows trusted root certificates
+
+    mmc.exe in explorer as administrator
+    File --> add snap-in --> add --> computer account --> local computer --> finish
+    Certificates --> trusted root Certs --> right click certificates --> follow the prompts and navigate to localhost.pfx file --> ...
