@@ -1,3 +1,4 @@
 node_modules
-ssl.phrase
+phrase.json
 package-lock
+access_token

@@ -6,7 +6,7 @@ var https = require('https');
 var request = require('request');
 var path = require('path');
 const axios = require('axios');
-const phrase = fs.readFileSync(path.resolve('../../ssl/phrase')).toString();
+const phrase = fs.readFileSync(path.resolve('./ssl/phrase')).toString();
 const qs = require('qs');
 
 const headers = {
@@ -15,12 +15,11 @@ const headers = {
 const client_id = 'TRADER_V4@AMER.OAUTHAP';
 const redirect_uri = 'https://localhost:443';
 const url = `https://api.tdameritrade.com/v1/oauth2/token/`;
-const form = 'form: '
 
 //SSL cert
 var credentials = {
-    key: fs.readFileSync(path.resolve('../../ssl/server.key')),
-    cert: fs.readFileSync(path.resolve('../../ssl/server.crt')),
+    key: fs.readFileSync(path.resolve('./ssl/server.key')),
+    cert: fs.readFileSync(path.resolve('./ssl/server.crt')),
     passphrase: phrase
 };
 
@@ -28,8 +27,8 @@ var express = require('express');
 var app = express();
 
 app.get('/', function(req, res){
+	const code = req.query.code;
     // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-    const code = req.query.code.toString(); //get the code
     // console.log(code);
     // axios({
     //     method: 'POST',
@@ -55,23 +54,30 @@ app.get('/', function(req, res){
                 //see the Authentication API's Post Access Token method for more information
 		url: 'https://api.tdameritrade.com/v1/oauth2/token',
 		method: 'POST',
-		// headers: headers,
+		headers: headers,
                 //POST Body params
 		form: {
 			'grant_type': 'authorization_code',
 			'access_type': 'offline',
-			'code': req.query.code, //get the code
-			'client_id': 'TRADER_V4@AMER.OAUTHAP',
-			'redirect_uri': 'https://localhost:443'
+			code,
+			client_id,
+			redirect_uri
 		}
 	}
         
         //Post Access Token request
 	request(options, function(error, response, body) {
 		//see Post Access Token response summary for what authReply contains
-            authReply = JSON.parse(body);
+			authReply = JSON.parse(body);
+			fs.writeFile('./ssl/access_token.json',JSON.stringify({
+				access_token: authReply.access_token,
+				refresh_token: authReply.refresh_token,
+				access_expires_by: Date.now() + (authReply.expires_in * 1000),
+				refresh_expires_by: Date.now() + (authReply.refresh_token_expires_in * 1000)
+			}),()=> console.log('access API written OK'));
+			
             // authResponse = JSON.parse(response);
-            console.log({error:error},{response:response},{body:body});
+            //console.log({response});
 			
 			//the line below is for convenience to test that it's working after authenticating
 			res.send(authReply);
