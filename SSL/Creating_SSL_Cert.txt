@@ -33,4 +33,6 @@ openssl pkcs12 -export -name “OTR_Enterprises” -out localhost.pfx -inkey loc
 
     mmc.exe in explorer as administrator
     File --> add snap-in --> add --> computer account --> local computer --> finish
-    Certificates --> trusted root Certs --> right click certificates --> follow the prompts and navigate to localhost.pfx file --> ...
+    Certificates --> trusted root Certs --> right click certificates --> follow the prompts and navigate to localhost.pfx file --> finish the import...
+
+5. Also import it to trusted third party certs (not sure if this matters but I did it anyways)

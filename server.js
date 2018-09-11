@@ -1,3 +1,5 @@
+//https://auth.tdameritrade.com/auth?response_type=code&redirect_uri=https%3A%2F%2Flocalhost%3A443&client_id=TRADER_V4%40AMER.OAUTHAP
+
 const fs = require('fs');
 const http = require('http');
 const https = require('https');
@@ -9,8 +11,8 @@ const app = express();
 //const axios = require('axios');
 //const qs = require('qs');
 
-const client_id = 'TRADER_V4@AMER.OAUTHAP';
-const redirect_uri = 'https://localhost:443';
+const client_id = 'TRADER_V5@AMER.OAUTHAP';
+const redirect_uri = 'https://localhost:448';
 
 
 //SSL cert
@@ -67,4 +69,4 @@ const httpsServer = https.createServer(credentials, app);
 
 //Set to 8080, but can be any port, code will only come over https, even if you specified http in your Redirect URI
 httpServer.listen(8080, console.log('server is on 8080'));
-httpsServer.listen(443, console.log('https is on'));
+httpsServer.listen(448, console.log('https is on 448'));

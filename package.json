@@ -4,8 +4,10 @@
   "description": "autotrader",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "server.js start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
   },
   "author": "ccf",
   "license": "ISC",
@@ -27,6 +29,11 @@
     "qs": "^6.5.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "react-redux": "^5.0.7",
+    "react-scripts": "1.1.5",
+    "redux": "^4.0.0",
+    "redux-devtools-extension": "^2.13.5",
+    "redux-thunk": "^2.3.0"
   }
 }
