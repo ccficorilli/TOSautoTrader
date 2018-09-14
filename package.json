@@ -4,7 +4,7 @@
   "description": "autotrader",
   "main": "server.js",
   "scripts": {
-    "start": "server.js start",
+    "start": "node server.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
@@ -25,15 +25,16 @@
     "express": "^4.16.3",
     "http": "0.0.0",
     "https": "^1.0.0",
+    "npm": "^6.4.1",
     "path": "^0.12.7",
     "qs": "^6.5.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
-    "request": "^2.88.0",
     "react-redux": "^5.0.7",
     "react-scripts": "1.1.5",
     "redux": "^4.0.0",
     "redux-devtools-extension": "^2.13.5",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "request": "^2.88.0"
   }
 }
